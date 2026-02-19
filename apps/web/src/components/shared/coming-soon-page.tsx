@@ -13,10 +13,11 @@ export function ComingSoonPage({ title, breadcrumb }: ComingSoonPageProps) {
       <PageHeader title={title} breadcrumb={breadcrumb} />
       <SectionCard>
         <div className="flex items-center gap-3">
-          <Clock3 className="h-5 w-5 text-muted" />
-          <p className="text-base font-medium text-muted">Próximamente</p>
+          <Clock3 className="h-5 w-5 text-tertiary" />
+          <p className="text-base font-medium text-tertiary">Próximamente</p>
         </div>
       </SectionCard>
     </div>
   );
 }
+

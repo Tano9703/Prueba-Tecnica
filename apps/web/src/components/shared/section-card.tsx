@@ -10,10 +10,11 @@ interface SectionCardProps {
 
 export function SectionCard({ title, description, children, className }: SectionCardProps) {
   return (
-    <section className={cn("rounded-xl border border-border bg-white p-6 shadow-card", className)}>
-      {title ? <h2 className="text-3xl font-bold text-foreground">{title}</h2> : null}
-      {description ? <p className="mt-2 text-sm text-muted">{description}</p> : null}
+    <section className={cn("rounded-xl border border-tertiary/35 bg-secondary p-4 shadow-card sm:p-6", className)}>
+      {title ? <h2 className="text-2xl font-bold text-primary sm:text-3xl">{title}</h2> : null}
+      {description ? <p className="mt-2 text-sm text-tertiary">{description}</p> : null}
       <div className={cn(title || description ? "mt-5" : "")}>{children}</div>
     </section>
   );
 }
+

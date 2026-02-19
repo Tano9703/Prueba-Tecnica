@@ -372,12 +372,12 @@ export function SalesClientPage() {
         title: "Cliente",
         render: (item) => (
           <div className="flex items-center gap-3">
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-100 text-xs font-semibold text-slate-600">
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-tertiary/18 text-xs font-semibold text-tertiary">
               {item.customerName.charAt(0)}
             </div>
             <div>
               <p className="font-semibold">{item.customerName}</p>
-              <p className="text-xs text-muted">{item.customerEmail}</p>
+              <p className="text-xs text-tertiary">{item.customerEmail}</p>
             </div>
           </div>
         ),
@@ -388,7 +388,7 @@ export function SalesClientPage() {
         render: (item) => (
           <div>
             <p className="font-semibold">{item.orderNumber}</p>
-            <p className="text-xs text-muted">{formatDate(item.createdAt)}</p>
+            <p className="text-xs text-tertiary">{formatDate(item.createdAt)}</p>
           </div>
         ),
       },
@@ -408,7 +408,7 @@ export function SalesClientPage() {
         render: (item) => (
           <div className="space-y-1">
             <StatusBadge status={item.paymentStatus} />
-            <p className="text-xs text-muted">{item.paymentMethod}</p>
+            <p className="text-xs text-tertiary">{item.paymentMethod}</p>
           </div>
         ),
       },
@@ -418,13 +418,13 @@ export function SalesClientPage() {
         className: "w-[120px]",
         render: (item) => (
           <div className="flex items-center gap-2">
-            <button className="rounded-md p-1 text-slate-600 hover:bg-slate-100" onClick={() => setSelectedSaleId(item.id)}>
+            <button className="rounded-md p-1 text-tertiary hover:bg-tertiary/18" onClick={() => setSelectedSaleId(item.id)}>
               <Eye className="h-4 w-4" />
             </button>
-            <button className="rounded-md p-1 text-slate-600 hover:bg-slate-100" onClick={() => openEditDialog(item)}>
+            <button className="rounded-md p-1 text-tertiary hover:bg-tertiary/18" onClick={() => openEditDialog(item)}>
               <Pencil className="h-4 w-4" />
             </button>
-            <button className="rounded-md p-1 text-[#B42318] hover:bg-red-50" onClick={() => setDeleteTarget(item)}>
+            <button className="rounded-md p-1 text-quinary hover:bg-quinary/10" onClick={() => setDeleteTarget(item)}>
               <Trash2 className="h-4 w-4" />
             </button>
           </div>
@@ -452,21 +452,21 @@ export function SalesClientPage() {
         }
       />
       {productsQuery.isError ? (
-        <p className="mb-4 text-sm text-[#B42318]">No se pudieron cargar los productos disponibles para ventas.</p>
+        <p className="mb-4 text-sm text-quinary">No se pudieron cargar los productos disponibles para ventas.</p>
       ) : !productsQuery.isLoading && !hasAvailableProducts ? (
-        <p className="mb-4 text-sm text-[#B42318]">No hay productos disponibles. Carga productos para poder generar ventas.</p>
+        <p className="mb-4 text-sm text-quinary">No hay productos disponibles. Carga productos para poder generar ventas.</p>
       ) : null}
 
-      <div className="rounded-xl border border-border bg-white p-4">
-        <h2 className="mb-3 text-3xl font-bold">Listado de Ventas</h2>
-        <div className="mb-2 flex items-center justify-between">
-          <SearchInput value={search} onChange={setSearch} className="max-w-md" />
-          {salesQuery.isFetching && !salesQuery.isLoading ? <p className="text-xs text-muted">Actualizando...</p> : null}
+      <div className="rounded-xl border border-tertiary/35 bg-secondary p-4">
+        <h2 className="mb-3 text-2xl font-bold sm:text-3xl">Listado de Ventas</h2>
+        <div className="mb-2 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+          <SearchInput value={search} onChange={setSearch} className="w-full sm:max-w-md" />
+          {salesQuery.isFetching && !salesQuery.isLoading ? <p className="text-xs text-tertiary">Actualizando...</p> : null}
         </div>
         {salesQuery.isLoading ? (
           <LoadingState message="Cargando ventas..." />
         ) : salesQuery.isError ? (
-          <p className="py-6 text-sm text-[#B42318]">No se pudieron cargar las ventas.</p>
+          <p className="py-6 text-sm text-quinary">No se pudieron cargar las ventas.</p>
         ) : (
           <DataTable columns={columns} data={salesQuery.data ?? []} rowKey={(row) => row.id} emptyMessage="No hay ventas registradas." />
         )}
@@ -569,11 +569,11 @@ export function SalesClientPage() {
             </div>
             <div className="space-y-1 md:col-span-2">
               <Label>Productos vendidos</Label>
-              <div className="space-y-2 rounded-lg border border-border p-3">
+              <div className="space-y-2 rounded-lg border border-tertiary/35 p-3">
                 {productsQuery.isError ? (
-                  <p className="text-sm text-[#B42318]">No se pudieron cargar los productos para esta venta.</p>
+                  <p className="text-sm text-quinary">No se pudieron cargar los productos para esta venta.</p>
                 ) : !hasAvailableProducts ? (
-                  <p className="text-sm text-[#B42318]">No hay productos disponibles para seleccionar.</p>
+                  <p className="text-sm text-quinary">No hay productos disponibles para seleccionar.</p>
                 ) : null}
                 {generateItemsFieldArray.fields.map((field, index) => {
                   const itemValues = watchedItems?.[index];
@@ -582,7 +582,7 @@ export function SalesClientPage() {
                   const selectedAttributes = itemValues?.attributes ?? [];
 
                   return (
-                    <div key={field.id} className="grid grid-cols-1 gap-2 rounded-lg border border-border p-2 md:grid-cols-[1fr_120px_120px_40px]">
+                    <div key={field.id} className="grid grid-cols-1 gap-2 rounded-lg border border-tertiary/35 p-2 md:grid-cols-[1fr_120px_120px_40px]">
                       <div className="space-y-2">
                         <Controller
                           name={`items.${index}.productId`}
@@ -613,21 +613,21 @@ export function SalesClientPage() {
                           )}
                         />
                         {selectedProduct ? (
-                          <div className="flex items-center gap-2 rounded-md border border-border px-2 py-1">
-                            <div className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-md bg-slate-100">
+                          <div className="flex items-center gap-2 rounded-md border border-tertiary/35 px-2 py-1">
+                            <div className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-md bg-tertiary/18">
                               {selectedProduct.imageUrl ? (
                                 // eslint-disable-next-line @next/next/no-img-element
                                 <img src={selectedProduct.imageUrl} alt={selectedProduct.name} className="h-full w-full object-cover" />
                               ) : (
-                                <ImageIcon className="h-4 w-4 text-slate-400" />
+                                <ImageIcon className="h-4 w-4 text-tertiary/70" />
                               )}
                             </div>
-                            <p className="truncate text-xs text-muted">{selectedProduct.name}</p>
+                            <p className="truncate text-xs text-tertiary">{selectedProduct.name}</p>
                           </div>
                         ) : null}
                         {selectedProduct && selectedAttributes.length > 0 ? (
-                          <div className="space-y-2 rounded-md border border-border p-2">
-                            <p className="text-xs font-semibold text-muted">Atributos</p>
+                          <div className="space-y-2 rounded-md border border-tertiary/35 p-2">
+                            <p className="text-xs font-semibold text-tertiary">Atributos</p>
                             {selectedAttributes.map((attribute, attributeIndex) => {
                               const optionValues = selectedProduct.options.find((option) => option.name === attribute.name)?.values ?? [];
                               const isSizeColorOption = isSizeColorOptionName(attribute.name);
@@ -722,7 +722,7 @@ export function SalesClientPage() {
                                     />
                                   )}
                                   {isSizeColorOption && sizeColorMap && !sizeColorMap.hasMatrix ? (
-                                    <p className="text-[11px] text-muted">
+                                    <p className="text-[11px] text-tertiary">
                                       Tip: para restringir colores por talle, carga este atributo como `S:rojo|verde, L:azul|naranja`.
                                     </p>
                                   ) : null}
@@ -732,7 +732,7 @@ export function SalesClientPage() {
                           </div>
                         ) : null}
                         {generateForm.formState.errors.items?.[index]?.attributes?.message ? (
-                          <p className="text-xs text-[#B42318]">{generateForm.formState.errors.items[index]?.attributes?.message}</p>
+                          <p className="text-xs text-quinary">{generateForm.formState.errors.items[index]?.attributes?.message}</p>
                         ) : null}
                       </div>
                       <Input type="number" min={1} {...generateForm.register(`items.${index}.quantity`)} />
@@ -744,7 +744,7 @@ export function SalesClientPage() {
                         onClick={() => generateItemsFieldArray.remove(index)}
                         disabled={generateItemsFieldArray.fields.length <= 1}
                       >
-                        <Trash2 className="h-4 w-4 text-[#B42318]" />
+                        <Trash2 className="h-4 w-4 text-quinary" />
                       </Button>
                     </div>
                   );
@@ -760,7 +760,7 @@ export function SalesClientPage() {
                 </Button>
               </div>
               {generateForm.formState.errors.items?.message ? (
-                <p className="text-sm text-[#B42318]">{generateForm.formState.errors.items.message}</p>
+                <p className="text-sm text-quinary">{generateForm.formState.errors.items.message}</p>
               ) : null}
             </div>
             <div className="space-y-1 md:col-span-2">
@@ -808,7 +808,7 @@ export function SalesClientPage() {
                         onChange={field.onChange}
                         className="pr-9"
                       />
-                      <Percent className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted" />
+                      <Percent className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-tertiary" />
                     </div>
                   );
                 }}
@@ -817,7 +817,7 @@ export function SalesClientPage() {
             <div className="space-y-1 md:col-span-2">
               <Label>Total calculado</Label>
               <Input value={currency(computedTotal)} disabled />
-              <p className="text-xs text-muted">
+              <p className="text-xs text-tertiary">
                 Subtotal: {currency(subtotal)}
                 {watchedAdjustmentType !== "NONE"
                   ? ` | ${watchedAdjustmentType === "DISCOUNT" ? "Descuento" : "Recargo"}: ${safeAdjustmentPercent}% (${watchedAdjustmentType === "DISCOUNT" ? "-" : "+"}${currency(adjustmentAmount)})`
@@ -826,11 +826,9 @@ export function SalesClientPage() {
             </div>
           </div>
 
-          {generateMutation.error ? (
-            <p className="text-sm text-[#B42318]">{(generateMutation.error as Error).message}</p>
-          ) : null}
+          {generateMutation.error ? <p className="text-sm text-quinary">{(generateMutation.error as Error).message}</p> : null}
 
-          <div className="flex justify-end">
+          <div className="flex justify-end [&>*]:w-full sm:[&>*]:w-auto">
             <Button type="submit" disabled={generateMutation.isPending || !canGenerateSales}>
               {generateMutation.isPending ? "Generando..." : "Confirmar Venta"}
             </Button>
@@ -919,11 +917,9 @@ export function SalesClientPage() {
             </div>
           </div>
 
-          {updateMutation.error ? (
-            <p className="text-sm text-[#B42318]">{(updateMutation.error as Error).message}</p>
-          ) : null}
+          {updateMutation.error ? <p className="text-sm text-quinary">{(updateMutation.error as Error).message}</p> : null}
 
-          <div className="flex justify-end">
+          <div className="flex justify-end [&>*]:w-full sm:[&>*]:w-auto">
             <Button type="submit" disabled={updateMutation.isPending}>
               {updateMutation.isPending ? "Guardando..." : "Guardar cambios"}
             </Button>
@@ -945,17 +941,17 @@ export function SalesClientPage() {
         {saleDetailQuery.isLoading ? (
           <LoadingState message="Cargando detalle de la venta..." className="min-h-60" />
         ) : saleDetailQuery.isError || !selectedSale ? (
-          <p className="text-sm text-[#B42318]">No se pudo cargar el detalle de la venta.</p>
+          <p className="text-sm text-quinary">No se pudo cargar el detalle de la venta.</p>
         ) : (
           <div className="space-y-4">
-            <section className="rounded-xl border border-border p-4">
+            <section className="rounded-xl border border-tertiary/35 p-4">
               <h4 className="mb-4 flex items-center gap-2 text-2xl font-bold">
                 <Truck className="h-5 w-5" />
                 Estado Actual
               </h4>
               <div className="flex items-center gap-3">
                 <StatusBadge status={selectedSale.status} />
-                <div className="flex items-center gap-1 text-muted">
+                <div className="flex items-center gap-1 text-tertiary">
                   <Calendar className="h-4 w-4" />
                   Orden #{selectedSale.orderNumber}
                 </div>
@@ -963,111 +959,111 @@ export function SalesClientPage() {
             </section>
 
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-              <section className="rounded-xl border border-border p-4">
+              <section className="rounded-xl border border-tertiary/35 p-4">
                 <h4 className="mb-3 flex items-center gap-2 text-2xl font-bold">
                   <UserRound className="h-5 w-5" />
                   Información del Cliente
                 </h4>
                 <p className="mb-2 font-semibold">{selectedSale.customerName}</p>
-                <p className="flex items-center gap-2 text-sm text-muted">
+                <p className="flex items-center gap-2 text-sm text-tertiary">
                   <Mail className="h-4 w-4" />
                   {selectedSale.customerEmail}
                 </p>
-                <p className="mt-2 flex items-center gap-2 text-sm text-muted">
+                <p className="mt-2 flex items-center gap-2 text-sm text-tertiary">
                   <Phone className="h-4 w-4" />
                   5521232104
                 </p>
-                <p className="mt-2 flex items-center gap-2 text-sm text-muted">
+                <p className="mt-2 flex items-center gap-2 text-sm text-tertiary">
                   <IdCard className="h-4 w-4" />
                   ID: {selectedSale.id}
                 </p>
               </section>
 
-              <section className="rounded-xl border border-border p-4">
+              <section className="rounded-xl border border-tertiary/35 p-4">
                 <h4 className="mb-3 flex items-center gap-2 text-2xl font-bold">
                   <Wallet className="h-5 w-5" />
                   Información de Pago
                 </h4>
                 <p className="flex justify-between">
-                  <span className="text-muted">Método:</span>
+                  <span className="text-tertiary">Método:</span>
                   <span className="font-semibold">{selectedSale.paymentMethod}</span>
                 </p>
-                <p className="mt-2 flex items-center justify-between">
-                  <span className="text-muted">Estado:</span>
+                <p className="mt-2 flex items-center justify-between gap-2">
+                  <span className="text-tertiary">Estado:</span>
                   <StatusBadge status={selectedSale.paymentStatus} />
                 </p>
-                <p className="mt-2 flex justify-between">
-                  <span className="text-muted">Total:</span>
-                  <span className="text-3xl font-bold">{currency(selectedSale.total)}</span>
+                <p className="mt-2 flex items-center justify-between gap-2">
+                  <span className="text-tertiary">Total:</span>
+                  <span className="whitespace-nowrap text-2xl font-bold sm:text-3xl">{currency(selectedSale.total)}</span>
                 </p>
               </section>
             </div>
 
-            <section className="rounded-xl border border-border p-4">
+            <section className="rounded-xl border border-tertiary/35 p-4">
               <h4 className="mb-3 flex items-center gap-2 text-2xl font-bold">
                 <MapPin className="h-5 w-5" />
                 Información de Envío
               </h4>
-              <p className="text-sm font-semibold text-muted">Dirección de Envío:</p>
-              <p className="text-slate-600">{selectedSale.shippingAddress}</p>
+              <p className="text-sm font-semibold text-tertiary">Dirección de Envío:</p>
+              <p className="text-tertiary">{selectedSale.shippingAddress}</p>
               <p className="mt-3 flex items-center gap-2">
-                <Box className="h-4 w-4 text-muted" />
+                <Box className="h-4 w-4 text-tertiary" />
                 <span className="font-semibold">Tracking:</span> {selectedSale.trackingNumber ?? "Sin tracking"}
               </p>
             </section>
 
-            <section className="rounded-xl border border-border p-4">
+            <section className="rounded-xl border border-tertiary/35 p-4">
               <h4 className="mb-3 text-2xl font-bold">Productos de la Venta</h4>
               {selectedSale.items?.length ? (
                 <div className="space-y-2">
                   {selectedSale.items.map((item) => {
                     const saleProduct = selectedProductsMap.get(item.productId);
                     return (
-                      <div key={item.id} className="flex items-center justify-between rounded-lg border border-border px-3 py-2">
+                      <div key={item.id} className="flex flex-col gap-2 rounded-lg border border-tertiary/35 px-3 py-2 sm:flex-row sm:items-center sm:justify-between">
                         <div className="flex items-center gap-3">
-                          <div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-md bg-slate-100">
+                          <div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-md bg-tertiary/18">
                             {saleProduct?.imageUrl ? (
                               // eslint-disable-next-line @next/next/no-img-element
                               <img src={saleProduct.imageUrl} alt={item.productNameSnapshot} className="h-full w-full object-cover" />
                             ) : (
-                              <ImageIcon className="h-4 w-4 text-slate-400" />
+                              <ImageIcon className="h-4 w-4 text-tertiary/70" />
                             )}
                           </div>
                           <div>
                             <p className="font-semibold">{item.productNameSnapshot}</p>
-                            <p className="text-xs text-muted">
+                            <p className="text-xs text-tertiary">
                               {item.quantity} x {currency(item.unitPrice)}
                             </p>
                           </div>
                         </div>
-                        <p className="font-semibold">{currency(item.subtotal)}</p>
+                        <p className="self-end font-semibold sm:self-auto">{currency(item.subtotal)}</p>
                       </div>
                     );
                   })}
                 </div>
               ) : (
-                <p className="text-sm text-muted">Esta venta no tiene productos asociados.</p>
+                <p className="text-sm text-tertiary">Esta venta no tiene productos asociados.</p>
               )}
             </section>
 
-            <section className="rounded-xl border border-border p-4">
+            <section className="rounded-xl border border-tertiary/35 p-4">
               <h4 className="mb-3 flex items-center gap-2 text-2xl font-bold">
                 <RotateCcw className="h-5 w-5" />
                 Historial de Modificaciones
               </h4>
               <div className="space-y-3">
                 {(selectedSale.histories ?? []).map((history) => (
-                  <div key={history.id} className="flex items-start gap-3 rounded-lg border border-border p-3">
-                    <div className="mt-1 flex h-8 w-8 items-center justify-center rounded-full bg-indigo-100 text-indigo-600">
+                  <div key={history.id} className="flex items-start gap-3 rounded-lg border border-tertiary/35 p-3">
+                    <div className="mt-1 flex h-8 w-8 items-center justify-center rounded-full bg-tertiary/20 text-tertiary">
                       <Truck className="h-4 w-4" />
                     </div>
                     <div>
                       <div className="mb-1 flex items-center gap-2">
                         <StatusBadge status={history.status} />
-                        <span className="text-sm text-muted">{formatDate(history.createdAt)}</span>
+                        <span className="text-sm text-tertiary">{formatDate(history.createdAt)}</span>
                       </div>
                       <p>{history.note ?? "Sin nota."}</p>
-                      <p className="text-sm text-muted">Por: {history.changedBy ?? "Sistema"}</p>
+                      <p className="text-sm text-tertiary">Por: {history.changedBy ?? "Sistema"}</p>
                     </div>
                   </div>
                 ))}
@@ -1079,7 +1075,7 @@ export function SalesClientPage() {
               <Textarea value={notes} onChange={(event) => setNotes(event.target.value)} placeholder="Agregar notas sobre el cambio de estado..." />
             </div>
 
-            <section className="border-t border-border pt-4">
+            <section className="border-t border-tertiary/35 pt-4">
               <p className="mb-2 font-medium">Acciones Disponibles</p>
               <Button
                 className="w-full"
@@ -1111,3 +1107,4 @@ export function SalesClientPage() {
     </div>
   );
 }
+

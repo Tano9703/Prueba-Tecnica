@@ -39,35 +39,35 @@ export function DashboardClientPage() {
   return (
     <div>
       <PageHeader title="Inicio" breadcrumb="Inicio" />
-      <div className="grid grid-cols-1 gap-6 xl:grid-cols-[1fr_1fr_1fr]">
-        <SectionCard className="min-h-[520px]">
+      <div className="grid grid-cols-1 gap-4 sm:gap-6 xl:grid-cols-[1fr_1fr_1fr]">
+        <SectionCard className="xl:min-h-[520px]">
           {dashboardStatsQuery.isLoading ? (
             <LoadingState message="Cargando inventario..." />
           ) : dashboardStatsQuery.isError ? (
-            <p className="text-sm text-[#B42318]">No se pudo cargar el inventario.</p>
+            <p className="text-sm text-quinary">No se pudo cargar el inventario.</p>
           ) : (
             <>
               <div className="mb-5 flex items-start justify-between">
-                <h2 className="text-4xl font-bold text-foreground">Inventario de Productos</h2>
+                <h2 className="text-2xl font-bold text-primary sm:text-3xl lg:text-4xl">Inventario de Productos</h2>
               </div>
 
-              <p className="text-5xl font-black">{dashboardStatsQuery.data?.inventory.totalProducts ?? 0}</p>
-              <p className="text-base text-muted">Productos en inventario</p>
-              <p className="mt-2 text-3xl font-semibold">Valor: {currency(dashboardStatsQuery.data?.inventory.totalValue ?? 0)}</p>
+              <p className="text-4xl font-black sm:text-5xl">{dashboardStatsQuery.data?.inventory.totalProducts ?? 0}</p>
+              <p className="text-base text-tertiary">Productos en inventario</p>
+              <p className="mt-2 break-words text-2xl font-semibold sm:text-3xl">Valor: {currency(dashboardStatsQuery.data?.inventory.totalValue ?? 0)}</p>
 
               <div className="mt-5 space-y-2 text-sm">
                 {(dashboardStatsQuery.data?.inventory.products ?? []).length === 0 ? (
-                  <p className="text-center text-base text-muted">No hay productos cargados.</p>
+                  <p className="text-center text-base text-tertiary">No hay productos cargados.</p>
                 ) : (
                   (dashboardStatsQuery.data?.inventory.products ?? []).map((item) => (
-                    <div key={item.id} className="flex items-start justify-between gap-3 border-b border-border pb-2">
+                    <div key={item.id} className="flex flex-col gap-1 border-b border-tertiary/35 pb-2 sm:flex-row sm:items-start sm:justify-between">
                       <span>{item.name}</span>
-                      <span className="whitespace-nowrap text-muted">{currency(item.price)}</span>
+                      <span className="whitespace-nowrap text-tertiary">{currency(item.price)}</span>
                     </div>
                   ))
                 )}
                 {(dashboardStatsQuery.data?.inventory.totalProducts ?? 0) > (dashboardStatsQuery.data?.inventory.products.length ?? 0) ? (
-                  <p className="text-center text-base text-muted">
+                  <p className="text-center text-base text-tertiary">
                     +{(dashboardStatsQuery.data?.inventory.totalProducts ?? 0) - (dashboardStatsQuery.data?.inventory.products.length ?? 0)} productos más
                   </p>
                 ) : null}
@@ -77,26 +77,26 @@ export function DashboardClientPage() {
           )}
         </SectionCard>
 
-        <SectionCard className="min-h-[520px]" title="Ventas Recientes">
+        <SectionCard className="xl:min-h-[520px]" title="Ventas Recientes">
           {salesQuery.isLoading ? (
             <LoadingState message="Cargando ventas..." />
           ) : salesQuery.isError ? (
-            <p className="text-sm text-[#B42318]">No se pudieron cargar las ventas.</p>
+            <p className="text-sm text-quinary">No se pudieron cargar las ventas.</p>
           ) : (salesQuery.data ?? []).length === 0 ? (
-            <p className="text-sm text-muted">No hay ventas realizadas todavía.</p>
+            <p className="text-sm text-tertiary">No hay ventas realizadas todavía.</p>
           ) : (
             <div className="space-y-3">
               {(salesQuery.data ?? []).map((sale) => (
-                <div key={sale.id} className="rounded-xl border border-border p-4">
-                  <div className="flex items-start justify-between gap-3">
+                <div key={sale.id} className="rounded-xl border border-tertiary/35 p-4">
+                  <div className="flex flex-col gap-1 sm:flex-row sm:items-start sm:justify-between">
                     <p className="font-semibold leading-5">{sale.customerName}</p>
-                    <p className="font-bold text-[#16A34A]">{currency(sale.total)}</p>
+                    <p className="font-bold text-quaternary">{currency(sale.total)}</p>
                   </div>
-                  <div className="mt-2 flex items-center justify-between gap-2 text-sm text-muted">
+                  <div className="mt-2 flex flex-col gap-1 text-sm text-tertiary sm:flex-row sm:items-center sm:justify-between">
                     <span>Order #{sale.orderNumber}</span>
                     <span>{formatDate(sale.createdAt)}</span>
                   </div>
-                  <p className="text-sm text-muted">Status: {sale.status}</p>
+                  <p className="text-sm text-tertiary">Status: {sale.status}</p>
                 </div>
               ))}
             </div>
@@ -107,17 +107,17 @@ export function DashboardClientPage() {
           {dashboardStatsQuery.isLoading ? (
             <LoadingState message="Cargando productos..." />
           ) : dashboardStatsQuery.isError ? (
-            <p className="text-sm text-[#B42318]">No se pudieron cargar los productos más vendidos.</p>
+            <p className="text-sm text-quinary">No se pudieron cargar los productos más vendidos.</p>
           ) : (dashboardStatsQuery.data?.topProducts ?? []).length === 0 ? (
-            <div className="mt-4 rounded-xl border border-dashed border-border py-14 text-center">
-              <p className="text-2xl text-muted">No hay productos top para mostrar.</p>
+            <div className="mt-4 rounded-xl border border-dashed border-tertiary/35 py-14 text-center">
+              <p className="text-2xl text-tertiary">No hay productos top para mostrar.</p>
             </div>
           ) : (
             <div className="mt-3 space-y-2">
               {(dashboardStatsQuery.data?.topProducts ?? []).map((product) => (
-                <div key={product.id} className="flex items-center justify-between rounded-lg border border-border px-3 py-2">
+                <div key={product.id} className="flex flex-col gap-1 rounded-lg border border-tertiary/35 px-3 py-2 sm:flex-row sm:items-center sm:justify-between">
                   <p className="line-clamp-2 text-sm font-medium">{product.name}</p>
-                  <p className="ml-3 whitespace-nowrap text-xs text-muted">{product.sold} uds.</p>
+                  <p className="whitespace-nowrap text-xs text-tertiary sm:ml-3">{product.sold} uds.</p>
                 </div>
               ))}
             </div>
@@ -127,3 +127,4 @@ export function DashboardClientPage() {
     </div>
   );
 }
+

@@ -13,9 +13,9 @@ export function CrudDialog({ open, onOpenChange, title, children, maxWidthClassN
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
+    <div className="fixed inset-0 z-50 flex items-start justify-center p-2 pt-4 sm:items-center sm:p-0">
       <button
-        className="absolute inset-0 bg-slate-900/35"
+        className="absolute inset-0 bg-primary/35"
         onClick={() => onOpenChange(false)}
         aria-label="Cerrar modal"
       />
@@ -23,15 +23,15 @@ export function CrudDialog({ open, onOpenChange, title, children, maxWidthClassN
         role="dialog"
         aria-modal="true"
         className={cn(
-          "relative z-10 max-h-[90vh] w-[95vw] max-w-3xl overflow-y-auto rounded-xl border border-border bg-white p-6 shadow-lg",
+          "relative z-10 max-h-[calc(100vh-1.25rem)] w-[calc(100vw-1rem)] max-w-3xl overflow-y-auto rounded-xl border border-tertiary/35 bg-secondary p-4 shadow-lg sm:max-h-[90vh] sm:w-[95vw] sm:p-6",
           maxWidthClassName,
         )}
       >
         <header className="mb-4 pr-8">
-          <h3 className="text-3xl font-bold text-foreground">{title}</h3>
+          <h3 className="text-2xl font-bold text-primary sm:text-3xl">{title}</h3>
         </header>
         <button
-          className="absolute right-4 top-4 rounded-md p-2 text-muted hover:bg-slate-100"
+          className="absolute right-4 top-4 rounded-md p-2 text-tertiary hover:bg-tertiary/18"
           onClick={() => onOpenChange(false)}
           aria-label="Cerrar"
         >
@@ -42,3 +42,4 @@ export function CrudDialog({ open, onOpenChange, title, children, maxWidthClassN
     </div>
   );
 }
+

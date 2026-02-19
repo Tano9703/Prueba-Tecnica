@@ -108,7 +108,7 @@ export function CategoriesClientPage() {
         render: (item) => (
           <div className="flex items-center gap-2">
             <button
-              className="rounded-md p-1 text-slate-600 hover:bg-slate-100"
+              className="rounded-md p-1 text-tertiary hover:bg-tertiary/18"
               onClick={() => {
                 setEditing(item);
                 createMutation.reset();
@@ -124,7 +124,7 @@ export function CategoriesClientPage() {
             >
               <Pencil className="h-4 w-4" />
             </button>
-            <button className="rounded-md p-1 text-[#B42318] hover:bg-red-50" onClick={() => setDeleteTarget(item)}>
+            <button className="rounded-md p-1 text-quinary hover:bg-quinary/10" onClick={() => setDeleteTarget(item)}>
               <Trash2 className="h-4 w-4" />
             </button>
           </div>
@@ -160,16 +160,16 @@ export function CategoriesClientPage() {
         }
       />
 
-      <div className="rounded-xl border border-border bg-white p-4">
-        <div className="mb-2 flex items-center justify-between">
-          <SearchInput value={search} onChange={setSearch} className="max-w-md" />
-          {categoriesQuery.isFetching && !categoriesQuery.isLoading ? <p className="text-xs text-muted">Actualizando...</p> : null}
+      <div className="rounded-xl border border-tertiary/35 bg-secondary p-4">
+        <div className="mb-2 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+          <SearchInput value={search} onChange={setSearch} className="w-full sm:max-w-md" />
+          {categoriesQuery.isFetching && !categoriesQuery.isLoading ? <p className="text-xs text-tertiary">Actualizando...</p> : null}
         </div>
 
         {categoriesQuery.isLoading ? (
           <LoadingState message="Cargando categorías..." />
         ) : categoriesQuery.isError ? (
-          <p className="py-6 text-sm text-[#B42318]">No se pudieron cargar las categorías.</p>
+          <p className="py-6 text-sm text-quinary">No se pudieron cargar las categorías.</p>
         ) : (
           <DataTable columns={columns} data={categories} rowKey={(row) => row.id} emptyMessage="No hay categorías registradas." />
         )}
@@ -223,7 +223,7 @@ export function CategoriesClientPage() {
           <div className="space-y-1">
             <Label htmlFor="name">Nombre</Label>
             <Input id="name" {...form.register("name")} />
-            {form.formState.errors.name ? <p className="text-xs text-[#B42318]">{form.formState.errors.name.message}</p> : null}
+            {form.formState.errors.name ? <p className="text-xs text-quinary">{form.formState.errors.name.message}</p> : null}
           </div>
 
           <div className="space-y-1">
@@ -254,16 +254,16 @@ export function CategoriesClientPage() {
           <div className="space-y-1">
             <Label htmlFor="position">Posición</Label>
             <Input id="position" type="number" {...form.register("position")} />
-            {form.formState.errors.position ? <p className="text-xs text-[#B42318]">{form.formState.errors.position.message}</p> : null}
+            {form.formState.errors.position ? <p className="text-xs text-quinary">{form.formState.errors.position.message}</p> : null}
           </div>
 
-          <div className="flex justify-end">
+          <div className="flex justify-end [&>*]:w-full sm:[&>*]:w-auto">
             <Button type="submit" disabled={createMutation.isPending || updateMutation.isPending}>
               {createMutation.isPending || updateMutation.isPending ? "Guardando..." : editing ? "Actualizar" : "Crear"}
             </Button>
           </div>
-          {createMutation.error ? <p className="text-sm text-[#B42318]">{(createMutation.error as Error).message}</p> : null}
-          {updateMutation.error ? <p className="text-sm text-[#B42318]">{(updateMutation.error as Error).message}</p> : null}
+          {createMutation.error ? <p className="text-sm text-quinary">{(createMutation.error as Error).message}</p> : null}
+          {updateMutation.error ? <p className="text-sm text-quinary">{(updateMutation.error as Error).message}</p> : null}
         </EntityForm>
       </CrudDialog>
 
@@ -287,3 +287,4 @@ export function CategoriesClientPage() {
     </div>
   );
 }
+

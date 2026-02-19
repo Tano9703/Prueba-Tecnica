@@ -29,8 +29,8 @@ export function ConfirmDialog({
       <DialogContent className="max-w-md">
         <DialogTitle className="text-xl">{title}</DialogTitle>
         <DialogDescription className="mt-2">{description}</DialogDescription>
-        {errorMessage ? <p className="mt-2 text-sm text-[#B42318]">{errorMessage}</p> : null}
-        <div className="mt-6 flex justify-end gap-2">
+        {errorMessage ? <p className="mt-2 text-sm text-quinary">{errorMessage}</p> : null}
+        <div className="mt-6 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
           <Button variant="outline" onClick={() => onOpenChange(false)}>
             {cancelLabel}
           </Button>
@@ -42,3 +42,4 @@ export function ConfirmDialog({
     </Dialog>
   );
 }
+

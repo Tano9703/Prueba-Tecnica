@@ -10,21 +10,21 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "#F8FAFC",
-        card: "#FFFFFF",
-        border: "#E2E8F0",
-        foreground: "#0F172A",
-        muted: "#64748B",
-        primary: {
-          DEFAULT: "#0B1739",
-          foreground: "#FFFFFF",
-        },
+        primary: "rgb(var(--color-primary) / <alpha-value>)",
+        secondary: "rgb(var(--color-secondary) / <alpha-value>)",
+        tertiary: "rgb(var(--color-tertiary) / <alpha-value>)",
+        quaternary: "rgb(var(--color-quaternary) / <alpha-value>)",
+        quinary: "rgb(var(--color-quinary) / <alpha-value>)",
+      },
+      fontFamily: {
+        sans: ["var(--font-sans)"],
+        display: ["var(--font-display)"],
       },
       borderRadius: {
-        xl: "12px",
+        xl: "var(--radius-xl)",
       },
       boxShadow: {
-        card: "0 1px 2px rgba(15, 23, 42, 0.06)",
+        card: "var(--shadow-card)",
       },
     },
   },

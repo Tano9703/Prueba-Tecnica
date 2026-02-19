@@ -192,17 +192,17 @@ export function ProductsClientPage() {
         title: "Nombre",
         render: (item) => (
           <button type="button" className="flex w-full items-center gap-3 text-left" onClick={() => setSelectedProduct(item)}>
-            <div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-md border border-border bg-slate-100">
+            <div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-md border border-tertiary/35 bg-tertiary/18">
               {item.imageUrl ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img src={item.imageUrl} alt={item.name} className="h-full w-full object-cover" />
               ) : (
-                <ImageIcon className="h-4 w-4 text-slate-400" />
+                <ImageIcon className="h-4 w-4 text-tertiary/70" />
               )}
             </div>
             <div>
               <p className="font-semibold">{item.name}</p>
-              <p className="max-w-[360px] truncate text-xs text-muted">{item.description ?? "Sin descripción"}</p>
+              <p className="max-w-[360px] truncate text-xs text-tertiary">{item.description ?? "Sin descripción"}</p>
             </div>
           </button>
         ),
@@ -229,7 +229,7 @@ export function ProductsClientPage() {
         render: (item) => (
           <div className="flex items-center gap-2">
             <button
-              className="rounded-md p-1 text-slate-600 hover:bg-slate-100"
+              className="rounded-md p-1 text-tertiary hover:bg-tertiary/18"
               onClick={() => {
                 setEditing(item);
                 form.reset({
@@ -252,7 +252,7 @@ export function ProductsClientPage() {
             >
               <Pencil className="h-4 w-4" />
             </button>
-            <button className="rounded-md p-1 text-[#B42318] hover:bg-red-50" onClick={() => setDeleteTarget(item)}>
+            <button className="rounded-md p-1 text-quinary hover:bg-quinary/10" onClick={() => setDeleteTarget(item)}>
               <Trash2 className="h-4 w-4" />
             </button>
           </div>
@@ -292,10 +292,10 @@ export function ProductsClientPage() {
         }
       />
 
-      <div className="rounded-xl border border-border bg-white p-4">
-        <div className="mb-4 rounded-xl border border-border bg-slate-50/50 p-3">
-          <div className="flex flex-wrap gap-2">
-            <SearchInput value={search} onChange={setSearch} className="max-w-4xl flex-1" placeholder="Buscar productos por nombre..." />
+      <div className="rounded-xl border border-tertiary/35 bg-secondary p-4">
+        <div className="mb-4 rounded-xl border border-tertiary/35 bg-secondary/80 p-3">
+          <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
+            <SearchInput value={search} onChange={setSearch} className="w-full flex-1 sm:max-w-4xl" placeholder="Buscar productos por nombre..." />
             <Button
               variant="outline"
               onClick={() => {
@@ -307,15 +307,15 @@ export function ProductsClientPage() {
           </div>
         </div>
 
-        <div className="mb-3 flex items-center justify-between">
-          <p className="text-sm text-muted">Mostrando {(productsQuery.data ?? []).length} de {(productsQuery.data ?? []).length} productos</p>
-          {productsQuery.isFetching && !productsQuery.isLoading ? <p className="text-xs text-muted">Actualizando...</p> : null}
+        <div className="mb-3 flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-sm text-tertiary">Mostrando {(productsQuery.data ?? []).length} de {(productsQuery.data ?? []).length} productos</p>
+          {productsQuery.isFetching && !productsQuery.isLoading ? <p className="text-xs text-tertiary">Actualizando...</p> : null}
         </div>
 
         {productsQuery.isLoading ? (
           <LoadingState message="Cargando productos..." />
         ) : productsQuery.isError ? (
-          <p className="py-6 text-sm text-[#B42318]">No se pudieron cargar los productos.</p>
+          <p className="py-6 text-sm text-quinary">No se pudieron cargar los productos.</p>
         ) : (
           <DataTable columns={columns} data={productsQuery.data ?? []} rowKey={(row) => row.id} emptyMessage="No hay productos." />
         )}
@@ -330,38 +330,38 @@ export function ProductsClientPage() {
         {selectedProduct ? (
           <div className="space-y-4">
             <div className="grid grid-cols-1 gap-4 md:grid-cols-[220px_1fr]">
-              <div className="flex h-[220px] items-center justify-center overflow-hidden rounded-xl border border-border bg-slate-100">
+              <div className="flex h-[220px] items-center justify-center overflow-hidden rounded-xl border border-tertiary/35 bg-tertiary/18">
                 {selectedProduct.imageUrl ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img src={selectedProduct.imageUrl} alt={selectedProduct.name} className="h-full w-full object-cover" />
                 ) : (
-                  <ImageIcon className="h-10 w-10 text-slate-400" />
+                  <ImageIcon className="h-10 w-10 text-tertiary/70" />
                 )}
               </div>
               <div>
-                <h3 className="text-3xl font-bold">{selectedProduct.name}</h3>
-                <p className="mt-2 text-sm text-muted">{selectedProduct.description ?? "Sin descripción"}</p>
+                <h3 className="text-2xl font-bold sm:text-3xl">{selectedProduct.name}</h3>
+                <p className="mt-2 text-sm text-tertiary">{selectedProduct.description ?? "Sin descripción"}</p>
                 <div className="mt-4 flex flex-wrap items-center gap-2">
                   <Badge variant="info">{selectedProduct.categoryName}</Badge>
                   <Badge variant="dark">{selectedProduct.brand}</Badge>
                 </div>
                 <div className="mt-5 grid grid-cols-1 gap-3">
-                  <div className="rounded-lg border border-border p-3">
-                    <p className="text-xs text-muted">Precio</p>
+                  <div className="rounded-lg border border-tertiary/35 p-3">
+                    <p className="text-xs text-tertiary">Precio</p>
                     <p className="text-xl font-bold">{currency(selectedProduct.price)}</p>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="rounded-xl border border-border p-4">
+            <div className="rounded-xl border border-tertiary/35 p-4">
               <p className="mb-3 text-sm font-semibold">Atributos</p>
               {selectedProduct.options.length === 0 ? (
-                <p className="text-sm text-muted">Este producto no tiene atributos cargados.</p>
+                <p className="text-sm text-tertiary">Este producto no tiene atributos cargados.</p>
               ) : (
                 <div className="space-y-2">
                   {selectedProduct.options.map((option) => (
-                    <div key={option.name} className="rounded-lg border border-border p-2">
+                    <div key={option.name} className="rounded-lg border border-tertiary/35 p-2">
                       <p className="text-sm font-semibold">{option.name}</p>
                       <div className="mt-2 flex flex-wrap gap-2">
                         {option.values.map((value) => (
@@ -420,13 +420,13 @@ export function ProductsClientPage() {
                 return (
                   <div className="space-y-2 md:col-span-2">
                     <Label htmlFor="imageUrl">Miniatura del producto</Label>
-                    <div className="flex items-center gap-3">
-                      <div className="flex h-14 w-14 items-center justify-center overflow-hidden rounded-md border border-border bg-slate-100">
+                    <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-center">
+                      <div className="flex h-14 w-14 items-center justify-center overflow-hidden rounded-md border border-tertiary/35 bg-tertiary/18">
                         {imageValue ? (
                           // eslint-disable-next-line @next/next/no-img-element
                           <img src={imageValue} alt="Miniatura del producto" className="h-full w-full object-cover" />
                         ) : (
-                          <ImageIcon className="h-5 w-5 text-slate-400" />
+                          <ImageIcon className="h-5 w-5 text-tertiary/70" />
                         )}
                       </div>
                       <div className="flex-1 space-y-2">
@@ -456,7 +456,7 @@ export function ProductsClientPage() {
                               }
                               input.value = "";
                             }}
-                            className="text-sm text-muted file:mr-2 file:rounded-md file:border file:border-border file:bg-white file:px-2 file:py-1 file:text-sm"
+                            className="text-sm text-tertiary file:mr-2 file:rounded-md file:border file:border-tertiary/35 file:bg-secondary file:px-2 file:py-1 file:text-sm"
                           />
                           {imageValue ? (
                             <Button type="button" variant="outline" onClick={() => field.onChange("")}>
@@ -464,8 +464,8 @@ export function ProductsClientPage() {
                             </Button>
                           ) : null}
                         </div>
-                        {fromUpload ? <p className="text-xs text-muted">Imagen cargada desde archivo local.</p> : null}
-                        {imageError ? <p className="text-xs text-[#B42318]">{imageError}</p> : null}
+                        {fromUpload ? <p className="text-xs text-tertiary">Imagen cargada desde archivo local.</p> : null}
+                        {imageError ? <p className="text-xs text-quinary">{imageError}</p> : null}
                       </div>
                     </div>
                   </div>
@@ -516,13 +516,13 @@ export function ProductsClientPage() {
                 )}
               />
               {creatingCategory ? (
-                <div className="mt-2 space-y-2 rounded-lg border border-border p-2">
+                <div className="mt-2 space-y-2 rounded-lg border border-tertiary/35 p-2">
                   <Input
                     placeholder="Nombre de la nueva categoría"
                     value={newCategoryName}
                     onChange={(event) => setNewCategoryName(event.target.value)}
                   />
-                  <div className="flex gap-2">
+                  <div className="flex flex-wrap gap-2">
                     <Button type="button" variant="outline" onClick={() => setCreatingCategory(false)}>
                       Cancelar
                     </Button>
@@ -531,7 +531,7 @@ export function ProductsClientPage() {
                     </Button>
                   </div>
                   {createCategoryMutation.error ? (
-                    <p className="text-xs text-[#B42318]">{(createCategoryMutation.error as Error).message}</p>
+                    <p className="text-xs text-quinary">{(createCategoryMutation.error as Error).message}</p>
                   ) : null}
                 </div>
               ) : null}
@@ -554,23 +554,23 @@ export function ProductsClientPage() {
                   Agregar atributo
                 </Button>
               </div>
-              <div className="space-y-2 rounded-lg border border-border p-3">
+              <div className="space-y-2 rounded-lg border border-tertiary/35 p-3">
                 {optionsArray.fields.length === 0 ? (
-                  <p className="text-xs text-muted">Sin atributos cargados.</p>
+                  <p className="text-xs text-tertiary">Sin atributos cargados.</p>
                 ) : null}
                 {optionsArray.fields.map((field, index) => (
-                  <div key={field.id} className="grid grid-cols-1 gap-2 rounded-lg border border-border p-2 md:grid-cols-[220px_1fr_40px]">
+                  <div key={field.id} className="grid grid-cols-1 gap-2 rounded-lg border border-tertiary/35 p-2 md:grid-cols-[220px_1fr_40px]">
                     <Input placeholder="Nombre (ej: Talle)" {...form.register(`options.${index}.name`)} />
                     <Input placeholder="Valores separados por coma" {...form.register(`options.${index}.valuesText`)} />
                     <Button type="button" variant="ghost" size="icon" onClick={() => optionsArray.remove(index)}>
-                      <Trash2 className="h-4 w-4 text-[#B42318]" />
+                      <Trash2 className="h-4 w-4 text-quinary" />
                     </Button>
                   </div>
                 ))}
               </div>
             </div>
           </div>
-          <div className="flex justify-end">
+          <div className="flex justify-end [&>*]:w-full sm:[&>*]:w-auto">
             <Button type="submit" disabled={createMutation.isPending || updateMutation.isPending}>
               {createMutation.isPending || updateMutation.isPending
                 ? "Guardando..."
@@ -579,8 +579,8 @@ export function ProductsClientPage() {
                   : "Crear"}
             </Button>
           </div>
-          {createMutation.error ? <p className="mt-2 text-sm text-[#B42318]">{(createMutation.error as Error).message}</p> : null}
-          {updateMutation.error ? <p className="mt-2 text-sm text-[#B42318]">{(updateMutation.error as Error).message}</p> : null}
+          {createMutation.error ? <p className="mt-2 text-sm text-quinary">{(createMutation.error as Error).message}</p> : null}
+          {updateMutation.error ? <p className="mt-2 text-sm text-quinary">{(updateMutation.error as Error).message}</p> : null}
         </EntityForm>
       </CrudDialog>
 
@@ -603,3 +603,4 @@ export function ProductsClientPage() {
     </div>
   );
 }
+
