@@ -1,0 +1,18 @@
+{
+  "name": "prueba-tecnica-admin-panel",
+  "private": true,
+  "version": "1.0.0",
+  "packageManager": "pnpm@10.5.0",
+  "scripts": {
+    "dev": "pnpm -r --parallel dev",
+    "build": "pnpm -r build",
+    "lint": "pnpm -r lint",
+    "typecheck": "pnpm -r typecheck",
+    "db:up": "docker compose up -d postgres",
+    "db:down": "docker compose down",
+    "db:logs": "docker compose logs -f postgres",
+    "docker:full:up": "docker compose -f docker-compose.yml -f docker-compose.full.yml --profile full up -d --build",
+    "docker:full:down": "docker compose -f docker-compose.yml -f docker-compose.full.yml --profile full down",
+    "docker:full:logs": "docker compose -f docker-compose.yml -f docker-compose.full.yml --profile full logs -f postgres api web"
+  }
+}

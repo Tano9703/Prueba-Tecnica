@@ -1,0 +1,74 @@
+PRUEBA-TECNICA - GUIA DE ARRANQUE RAPIDO
+
+IMPORTANTE:
+- TODOS los comandos de esta guia se ejecutan desde la CARPETA RAIZ del proyecto.
+
+  
+  Requisitos:
+- Docker Desktop abierto (Engine running)
+- Node.js 20+
+- pnpm instalado
+
+========================================================================
+MODO 1 (RECOMENDADO): HIBRIDO
+Docker solo para DB + API/WEB en local
+========================================================================
+
+EJECUTAR EN RAIZ:
+
+1) Instalar dependencias
+pnpm install
+
+2) Levantar PostgreSQL en Docker (host 5433)
+pnpm db:up
+
+3) Preparar Prisma (tablas + datos demo)
+pnpm --filter @apps/api prisma:generate
+pnpm --filter @apps/api prisma:migrate -- --name init
+pnpm --filter @apps/api prisma:seed
+
+4) Levantar API (terminal 1, en raiz)
+pnpm --filter @apps/api dev
+
+5) Levantar WEB (terminal 2, en raiz)
+pnpm --filter @apps/web dev
+
+========================================================================
+MODO 2 (OPCIONAL): FULL DOCKER
+DB + API + WEB en contenedores aislados
+========================================================================
+
+EJECUTAR EN RAIZ:
+
+1) Instalar dependencias (solo una vez)
+pnpm install
+
+2) Levantar stack completo dockerizado
+pnpm docker:full:up
+
+3) Ver logs del stack
+pnpm docker:full:logs
+
+4) Bajar stack full
+pnpm docker:full:down
+
+NOTA:
+- En este modo no hace falta ejecutar pnpm dev para api/web en local.
+- El contenedor API ejecuta prisma:deploy + prisma:seed al iniciar.
+
+========================================================================
+URLs
+========================================================================
+- API: http://localhost:3002
+- WEB: http://localhost:3004
+
+Credenciales demo:
+- Email: admin@tennisstar.com
+- Password: admin123
+
+========================================================================
+COMANDOS UTILES (SIEMPRE EN RAIZ)
+========================================================================
+- Estado contenedores db-only: docker compose ps
+- Logs postgres db-only: pnpm db:logs
+- Bajar DB (modo hibrido): pnpm db:down

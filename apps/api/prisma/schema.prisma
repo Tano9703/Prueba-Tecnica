@@ -1,0 +1,113 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum SaleStatus {
+  SENT
+  PREPARING
+  CANCELLED
+  COMPLETED
+}
+
+enum PaymentStatus {
+  PAID
+  FAILED
+  PENDING
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Category {
+  id               String      @id @default(cuid())
+  name             String      @unique
+  position         Int         @default(0)
+  parentCategoryId String?
+  parentCategory   Category?   @relation("CategoryHierarchy", fields: [parentCategoryId], references: [id])
+  children         Category[]  @relation("CategoryHierarchy")
+  products         Product[]
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+
+  @@index([parentCategoryId])
+}
+
+model Product {
+  id          String     @id @default(cuid())
+  name        String
+  description String?
+  categoryId  String
+  category    Category   @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  brand       String
+  gender      String
+  imageUrl    String?
+  price       Decimal    @db.Decimal(10, 2)
+  options     Json?
+  saleItems   SaleItem[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@index([name])
+  @@index([categoryId])
+}
+
+model Sale {
+  id             String         @id @default(cuid())
+  orderNumber    String         @unique
+  customerName   String
+  customerEmail  String
+  total          Decimal        @db.Decimal(10, 2)
+  status         SaleStatus
+  paymentStatus  PaymentStatus
+  paymentMethod  String
+  shippingAddress String
+  trackingNumber String?
+  notes          String?
+  items          SaleItem[]
+  histories      SaleHistory[]
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  @@index([customerName])
+  @@index([status])
+  @@index([paymentStatus])
+}
+
+model SaleItem {
+  id                  String   @id @default(cuid())
+  saleId              String
+  sale                Sale     @relation(fields: [saleId], references: [id], onDelete: Cascade)
+  productId           String
+  product             Product  @relation(fields: [productId], references: [id], onDelete: Restrict)
+  productNameSnapshot String
+  unitPrice           Decimal  @db.Decimal(10, 2)
+  quantity            Int
+  subtotal            Decimal  @db.Decimal(10, 2)
+  createdAt           DateTime @default(now())
+
+  @@index([saleId])
+  @@index([productId])
+}
+
+model SaleHistory {
+  id        String     @id @default(cuid())
+  saleId    String
+  sale      Sale       @relation(fields: [saleId], references: [id], onDelete: Cascade)
+  status    SaleStatus
+  note      String?
+  changedBy String?
+  createdAt DateTime   @default(now())
+
+  @@index([saleId])
+}
