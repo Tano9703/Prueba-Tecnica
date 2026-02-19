@@ -20,6 +20,8 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
+import { ConfirmDialog } from "@/components/shared/confirm-dialog";
 import { clearAuthToken } from "@/lib/cookies";
 import { cn } from "@/lib/utils";
 
@@ -48,6 +50,7 @@ function getBreadcrumb(pathname: string) {
 export function AppLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
+  const [logoutOpen, setLogoutOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -91,10 +94,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
             </button>
             <button
               className="rounded-lg p-2 text-slate-600 hover:bg-slate-100"
-              onClick={() => {
-                clearAuthToken();
-                router.push("/login");
-              }}
+              onClick={() => setLogoutOpen(true)}
               title="Cerrar sesión"
             >
               <LogOut className="h-4 w-4" />
@@ -104,6 +104,18 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
         </header>
         <main className="p-8">{children}</main>
       </div>
+      <ConfirmDialog
+        open={logoutOpen}
+        onOpenChange={setLogoutOpen}
+        title="Cerrar sesión"
+        description="¿Seguro que quieres cerrar sesión?"
+        confirmLabel="Cerrar sesión"
+        onConfirm={() => {
+          clearAuthToken();
+          setLogoutOpen(false);
+          router.push("/login");
+        }}
+      />
     </div>
   );
 }
